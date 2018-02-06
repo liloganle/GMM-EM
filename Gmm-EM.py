@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 
 
-def init_params(data,k):
+def init_params(data, k):
     """初始化参数
     输入:data表示待估计的样本，k代表类别数
     alpha:类型是一维数组，每个元素对应相应模型的权重值
@@ -58,7 +58,8 @@ def gmm_em(data, k, alpha, mu, sigma):
         for row in range(K):
             temp = 0
             alpha[row] = np.sum(guass_array[:,row]) / len(data)
-            mu[row, :] = np.sum(guass_array[:, row].reshape(len(guass_array), 1) * data, axis=0) / np.sum(guass_array[:,row])
+            mu[row, :] = np.sum(guass_array[:, row].reshape(len(guass_array), 1) * data, axis=0) / np.sum(
+                    guass_array[:,row])
             for num in range(len(data)):
                 temp += guass_array[num, row] * np.dot((data[num, :]-mu[row, :]).reshape(len(mu[row,:]), 1),
                         (data[num,:]-mu[row, :]).reshape(1, len(mu[row,:])))
@@ -80,8 +81,7 @@ if __name__=="__main__":
     alpha,mu,sigma = gmm_em(data, K, init_alpha, init_mu, init_sigma)
     
     for num in range(K):
-        print("第 %d 个模型的权重系数为:%.3f, 其均值为:%s, 协方差矩阵为:\n%s"%(num+1, alpha[num], mu[num], sigma[num]))
-
+        print("第 %d 个模型的权重系数为:%.3f, 其均值为:%s, 协方差矩阵为:\n%r"%(num+1, alpha[num], mu[num], sigma[num]))
 
 
 
